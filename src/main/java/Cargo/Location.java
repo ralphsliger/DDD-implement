@@ -2,7 +2,7 @@ package Cargo;
 
 import Cargo.values.LocationID;
 import Cargo.values.OriginDescription;
-import Generic.Entity;
+import co.com.sofka.domain.generic.Entity;
 
 import java.util.Objects;
 

@@ -1,7 +1,7 @@
 package Cargo.events;
 
 import Cargo.values.OriginDescription;
-import Generic.DomainEvent;
+import co.com.sofka.domain.generic.DomainEvent;
 
 public class LocationAdded extends DomainEvent {
 

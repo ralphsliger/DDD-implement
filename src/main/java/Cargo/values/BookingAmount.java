@@ -1,9 +1,11 @@
 package Cargo.values;
 
+import co.com.sofka.domain.generic.ValueObject;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-public final class BookingAmount implements Serializable {
+public class BookingAmount implements ValueObject<Double> {
     private final Double amount;
 
     public BookingAmount(Double amount){
@@ -13,20 +15,21 @@ public final class BookingAmount implements Serializable {
         }
     }
 
-    public Double getAmount(){
-        return amount;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BookingAmount bookingAmount = (BookingAmount) o;
-        return Objects.equals(amount, bookingAmount.amount);
+        if (!(o instanceof BookingAmount)) return false;
+        BookingAmount that = (BookingAmount) o;
+        return Objects.equals(amount, that.amount);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(amount);
+    }
+
+    @Override
+    public Double value() {
+        return amount;
     }
 }

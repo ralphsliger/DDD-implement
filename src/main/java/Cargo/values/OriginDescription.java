@@ -1,17 +1,15 @@
 package Cargo.values;
 
+import co.com.sofka.domain.generic.ValueObject;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-public final class OriginDescription implements Serializable {
+public final class OriginDescription implements ValueObject<String> {
     private final String locationDescription;
 
     public OriginDescription(String locationDescription){
         this.locationDescription = Objects.requireNonNull(locationDescription);
-    }
-
-    public String getLocationDescription(){
-        return locationDescription;
     }
 
     @Override
@@ -28,4 +26,8 @@ public final class OriginDescription implements Serializable {
     }
 
 
+    @Override
+    public String value() {
+        return locationDescription;
+    }
 }

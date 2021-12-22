@@ -1,6 +1,7 @@
 package Cargo.events;
 
-import Generic.DomainEvent;
+
+import co.com.sofka.domain.generic.DomainEvent;
 
 public class BookingAmountUpdated extends DomainEvent {
     private final Double amount;

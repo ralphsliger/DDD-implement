@@ -1,8 +1,9 @@
 package Cargo.values;
 
-import Generic.Id;
 
-public final class CargoId extends Id {
+import co.com.sofka.domain.generic.Identity;
+
+public final class CargoId extends Identity {
 
     private CargoId(String value){
         super(value);

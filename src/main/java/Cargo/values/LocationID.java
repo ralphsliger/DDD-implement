@@ -1,9 +1,8 @@
 package Cargo.values;
 
-import Cargo.Location;
-import Generic.Id;
+import co.com.sofka.domain.generic.Identity;
 
-public class LocationID extends Id {
+public class LocationID extends Identity {
     private LocationID(String value){
         super(value);
     }

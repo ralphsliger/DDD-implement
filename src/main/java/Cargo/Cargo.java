@@ -1,55 +1,46 @@
 package Cargo;
 
-import Cargo.events.*;
+import Cargo.events.CargoCreated;
+import Cargo.events.ItineraryAdded;
 import Cargo.values.*;
-import Generic.AggregateRoot;
+import co.com.sofka.domain.generic.AggregateEvent;
+import co.com.sofka.domain.generic.DomainEvent;
+
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 
-public class Cargo extends AggregateRoot<CargoId> {
-    private  BookingAmount bookingAmount;
-    private  Location Location;
-    private Set<Itinerary> itinerary;
-    private  DeliveryContent deliveryContent;
+public class Cargo extends AggregateEvent<CargoId> {
+    protected   BookingAmount bookingAmount;
+    protected   Location Location;
+    protected Set<Itinerary> itinerary;
+    protected   DeliveryContent deliveryContent;
 
     public Cargo(CargoId cargoId, BookingAmount bookingAmount, Location location, DeliveryContent deliveryContent){
         super(cargoId);
-        this.bookingAmount = Objects.requireNonNull(bookingAmount);
-        this.Location = Objects.requireNonNull(location);
-        this.itinerary = new HashSet<>();
-        this.deliveryContent = Objects.requireNonNull(deliveryContent);
-        this.applyChange(new CargoCreated(cargoId, bookingAmount, location, this.itinerary, deliveryContent));
-
+        subscribe(new CargoChange(this));
+        appendChange(new CargoCreated(bookingAmount, location, deliveryContent)).apply();
     }
 
-    public Cargo(CargoId cargoId, BookingAmount bookingAmount, Location location, Itinerary itinerary, DeliveryContent deliveryContent){
+    public Cargo(CargoId cargoId){
         super(cargoId);
-        this.bookingAmount = Objects.requireNonNull(bookingAmount);
-        this.Location = Objects.requireNonNull(location);
-        this.itinerary = new HashSet<>();
-        this.deliveryContent = Objects.requireNonNull(deliveryContent);
-        this.applyChange(new CargoCreated(cargoId, bookingAmount, location, this.itinerary, deliveryContent));
-
+        subscribe(new CargoChange(this));
     }
 
-    public void updateBookingAmount(BookingAmount bookingAmount){
-        this.bookingAmount = bookingAmount;
-        this.applyChange(new BookingAmountUpdated(bookingAmount.getAmount()));
+    public static Cargo from(CargoId cargoId, List<DomainEvent> events){
+        var cargo = new Cargo(cargoId);
+        events.forEach(cargo::applyEvent);
+        return cargo;
     }
 
-    public void addLocation(Location location){
-        this.Location = location;
-        this.applyChange(new LocationAdded(Objects.requireNonNull(location.originDescription())));
+    public void addItinerary(String voyageCode, String fromLocation, String ToLocation, String loadTime, String unloadTime){
+        this.itinerary.add(new Itinerary(voyageCode, fromLocation, ToLocation, loadTime, unloadTime));
+        appendChange(new ItineraryAdded(voyageCode, fromLocation, ToLocation, loadTime, unloadTime)).apply();
     }
 
-
-    public void addItinerary(Itinerary itinerary){
-            this.itinerary.add(itinerary);
-            this.applyChange(new ItineraryAdded(itinerary.getVoyageCode(), itinerary.getFromLocation(), itinerary.getToLocation(), itinerary.getLoadTime(), itinerary.getUnloadTime()));
-    }
 
     public BookingAmount BookingAmount() {
         return bookingAmount;
@@ -66,4 +57,6 @@ public class Cargo extends AggregateRoot<CargoId> {
     public DeliveryContent DeliveryContent() {
         return deliveryContent;
     }
+
+
 }

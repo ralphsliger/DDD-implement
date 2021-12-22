@@ -1,9 +1,11 @@
 package Cargo.values;
 
-import java.io.Serializable;
+import co.com.sofka.domain.generic.ValueObject;
+
+
 import java.util.Objects;
 
-public final class Itinerary implements Serializable {
+public final class Itinerary implements ValueObject<Itinerary.Properties> {
     private final String voyageCode;
     private final String fromLocation;
     private final String ToLocation;
@@ -18,24 +20,34 @@ public final class Itinerary implements Serializable {
         this.unloadTime = Objects.requireNonNull(unloadTime);
     }
 
-    public String getVoyageCode() {
-        return voyageCode;
-    }
+    @Override
+    public Properties value() {
+        return new Properties() {
+            @Override
+            public String voyageCode() {
+                return voyageCode;
+            }
 
-    public String getFromLocation() {
-        return fromLocation;
-    }
+            @Override
+            public String fromLocation() {
+                return fromLocation;
+            }
 
-    public String getToLocation() {
-        return ToLocation;
-    }
+            @Override
+            public String ToLocation() {
+                return ToLocation;
+            }
 
-    public String getLoadTime() {
-        return loadTime;
-    }
+            @Override
+            public String loadTime() {
+                return loadTime;
+            }
 
-    public String getUnloadTime() {
-        return unloadTime;
+            @Override
+            public String unloadTime() {
+                return unloadTime;
+            }
+        };
     }
 
     @Override
@@ -49,5 +61,13 @@ public final class Itinerary implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(voyageCode, fromLocation, ToLocation, loadTime, unloadTime);
+    }
+
+    public interface Properties{
+            String voyageCode();
+          String fromLocation();
+          String ToLocation();
+          String loadTime();
+          String unloadTime();
     }
 }

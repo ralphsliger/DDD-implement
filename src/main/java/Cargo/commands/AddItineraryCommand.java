@@ -1,17 +1,15 @@
-package Cargo.events;
+package Cargo.commands;
 
-import co.com.sofka.domain.generic.DomainEvent;
+import co.com.sofka.domain.generic.Command;
 
-public class ItineraryAdded extends DomainEvent {
-
+public class AddItineraryCommand extends Command {
     private final String voyageCode;
     private final String fromLocation;
     private final String ToLocation;
     private final String loadTime;
     private final String unloadTime;
 
-    public ItineraryAdded(String voyageCode, String fromLocation, String toLocation, String loadTime, String unloadTime) {
-        super("Cargo.events.ItineraryAdded");
+    public AddItineraryCommand(String voyageCode, String fromLocation, String toLocation, String loadTime, String unloadTime) {
         this.voyageCode = voyageCode;
         this.fromLocation = fromLocation;
         ToLocation = toLocation;
