@@ -4,7 +4,7 @@ import co.com.sofka.domain.generic.ValueObject;
 
 import java.util.Objects;
 
-public class ETA implements ValueObject<String> {
+public final class ETA implements ValueObject<String> {
     private final String description;
 
     public ETA(String description) {

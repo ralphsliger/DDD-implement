@@ -1,21 +1,21 @@
-package Cargo.values;
+package CargoHandlingActivity.values;
 
 import co.com.sofka.domain.generic.ValueObject;
 
 import java.util.Objects;
 
-public final class RouteDestination implements ValueObject<String> {
+public final class FromLocation implements ValueObject<String> {
     private final String description;
 
-    public RouteDestination(String description){
-        this.description= Objects.requireNonNull(description);
+    public FromLocation(String description) {
+        this.description =Objects.requireNonNull(description);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RouteDestination)) return false;
-        RouteDestination that = (RouteDestination) o;
+        if (!(o instanceof FromLocation)) return false;
+        FromLocation that = (FromLocation) o;
         return Objects.equals(description, that.description);
     }
 

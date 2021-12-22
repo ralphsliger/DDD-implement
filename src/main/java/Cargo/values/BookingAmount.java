@@ -5,7 +5,7 @@ import co.com.sofka.domain.generic.ValueObject;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class BookingAmount implements ValueObject<Double> {
+public final class BookingAmount implements ValueObject<Double> {
     private final Double amount;
 
     public BookingAmount(Double amount){
